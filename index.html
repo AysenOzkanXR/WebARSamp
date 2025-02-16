@@ -1,69 +1,11 @@
-<html>
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
-    <script>
-      let container;
-      let camera, scene, renderer, controller;
-
-      init();
-      animate();
-
-      function init() {
-        container = document.createElement('div');
-        document.body.appendChild(container);
-
-        scene = new THREE.Scene();
-
-        // Kamera
-        camera = new THREE.PerspectiveCamera(
-          70,
-          window.innerWidth / window.innerHeight,
-          0.01,
-          20
-        );
-        scene.add(camera);
-
-        // Işık
-        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-        scene.add(light);
-
-        // Renderer
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.xr.enabled = true;
-        container.appendChild(renderer.domElement);
-
-        // AR Oturumu Başlat
-        document.body.appendChild(
-          ARButton.createButton(renderer, { requiredFeatures: ['hit-test'] })
-        );
-
-        // Kullanıcı dokunuşlarını algıla
-        controller = renderer.xr.getController(0);
-        controller.addEventListener('select', onSelect);
-        scene.add(controller);
-      }
-
-      function onSelect() {
-        // Hit test ile dokunulan pozisyonu bul
-        const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-        const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x800080 });
-        const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-
-        const pos = controller.position;
-        cube.position.set(pos.x, pos.y, pos.z);
-        scene.add(cube);
-      }
-
-      function animate() {
-        renderer.setAnimationLoop(render);
-      }
-
-      function render() {
-        renderer.render(scene, camera);
-      }
-    </script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="intent://arvr.google.com/scene-viewer/1.0?file=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;">Avocado</a>
+</body>
 </html>
